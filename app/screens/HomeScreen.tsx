@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Button,
   GestureResponderEvent,
   Image,
   ScrollView,
@@ -9,14 +10,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  MaterialIcons,
-  Feather,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Slide3 } from "../assets";
+import { fetchFeeds } from "../sanity";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const HomeScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -24,8 +23,18 @@ const HomeScreen = () => {
   const handleFilterPress = (event: GestureResponderEvent) => {
     setFilterPressed(!filterPressed);
   };
-
-  const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
+  const {
+    data: products,
+    isLoading,
+    isSuccess,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const data = await fetchFeeds();
+      return data;
+    },
+  });
 
   return (
     <SafeAreaView className="flex-1 justify-start items-center bg-[#ebeaef]">
@@ -68,13 +77,15 @@ const HomeScreen = () => {
       </View>
 
       {/* Scrollable View Starts */}
-      <ScrollView className="flex w-full bg-red-300">
+      <ScrollView className="flex w-full">
         {isLoading ? (
           <View className="flex-1 h-96  justify-center items-center">
-            <ActivityIndicator size={"large"} color={"teal"} />
+            <ActivityIndicator size={"large"} color={"orange"} />
           </View>
         ) : (
-          <View></View>
+          <View>
+            <Text>{JSON.stringify(products)}</Text>
+          </View>
         )}
       </ScrollView>
       {/* Scrollable View Ends */}
