@@ -1,6 +1,8 @@
 import {
+  ActivityIndicator,
   GestureResponderEvent,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -22,6 +24,8 @@ const HomeScreen = () => {
   const handleFilterPress = (event: GestureResponderEvent) => {
     setFilterPressed(!filterPressed);
   };
+
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <SafeAreaView className="flex-1 justify-start items-center bg-[#ebeaef]">
@@ -62,6 +66,18 @@ const HomeScreen = () => {
           )}
         </TouchableOpacity>
       </View>
+
+      {/* Scrollable View Starts */}
+      <ScrollView className="flex w-full bg-red-300">
+        {isLoading ? (
+          <View className="flex-1 h-96  justify-center items-center">
+            <ActivityIndicator size={"large"} color={"teal"} />
+          </View>
+        ) : (
+          <View></View>
+        )}
+      </ScrollView>
+      {/* Scrollable View Ends */}
     </SafeAreaView>
   );
 };
