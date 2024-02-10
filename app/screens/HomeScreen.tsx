@@ -19,6 +19,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../context/store";
 import { setFeeds } from "../context/feeds/feedsSlice";
+import Feeds from "../components/Feeds";
 
 const HomeScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -27,7 +28,7 @@ const HomeScreen = () => {
     setFilterPressed(!filterPressed);
   };
 
-  const feeds = useSelector<RootState>((state) => state.feeds);
+  const feeds = useSelector((state: RootState) => state.feeds.feeds);
   const dispatch = useDispatch<AppDispatch>();
 
   const {
@@ -42,7 +43,6 @@ const HomeScreen = () => {
       return data;
     },
   });
-
   return (
     <SafeAreaView className="flex-1 justify-start items-center bg-[#ebeaef]">
       <View className="flex flex-row p-4 w-full items-center justify-between">
@@ -84,17 +84,15 @@ const HomeScreen = () => {
       </View>
 
       {/* Scrollable View Starts */}
-      <ScrollView className="flex w-full">
-        {isLoading ? (
-          <View className="flex-1 h-96  justify-center items-center">
-            <ActivityIndicator size={"large"} color={"orange"} />
-          </View>
-        ) : (
-          <View>
-            <Text>{JSON.stringify(products)}</Text>
-          </View>
-        )}
-      </ScrollView>
+      {isLoading ? (
+        <View className="flex-1 h-96  justify-center items-center">
+          <ActivityIndicator size={"large"} color={"orange"} />
+        </View>
+      ) : (
+        <View>
+          <Feeds feeds={feeds} />
+        </View>
+      )}
       {/* Scrollable View Ends */}
     </SafeAreaView>
   );
