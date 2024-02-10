@@ -5,7 +5,7 @@ const client = createClient({
   projectId: "ck6nwpjj",
   dataset: "production",
   useCdn: true,
-  apiVersion: "2024-02-09",
+  apiVersion: "2022-03-07",
 });
 
 export async function fetchFeeds() {

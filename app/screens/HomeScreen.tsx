@@ -16,6 +16,7 @@ import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Slide3 } from "../assets";
 import { fetchFeeds } from "../sanity";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useDispatch, useSelector } from "react-redux";
 
 const HomeScreen = () => {
   const [searchText, setSearchText] = useState("");
