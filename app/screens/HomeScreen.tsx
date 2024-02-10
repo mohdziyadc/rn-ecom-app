@@ -15,8 +15,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Slide3 } from "../assets";
 import { fetchFeeds } from "../sanity";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../context/store";
+import { setFeeds } from "../context/feeds/feedsSlice";
 
 const HomeScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -24,7 +26,10 @@ const HomeScreen = () => {
   const handleFilterPress = (event: GestureResponderEvent) => {
     setFilterPressed(!filterPressed);
   };
-  const queryClient = useQueryClient();
+
+  const feeds = useSelector<RootState>((state) => state.feeds);
+  const dispatch = useDispatch<AppDispatch>();
+
   const {
     data: products,
     isLoading,
@@ -33,6 +38,7 @@ const HomeScreen = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const data = await fetchFeeds();
+      dispatch(setFeeds(data));
       return data;
     },
   });
