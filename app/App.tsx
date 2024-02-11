@@ -5,10 +5,12 @@ import OnboardingScreen from "./screens/OnboardingScreen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { store } from "./context/store";
+import ProductScreen from "./screens/ProductScreen";
 
 export type StackParamList = {
   Onboarding: undefined;
   Home: undefined;
+  Product: { id: string };
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -21,6 +23,7 @@ export default function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Onboarding" component={OnboardingScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Product" component={ProductScreen} />
           </Stack.Navigator>
         </QueryClientProvider>
       </Provider>

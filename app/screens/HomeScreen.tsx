@@ -24,6 +24,7 @@ import Feeds from "../components/Feeds";
 const HomeScreen = () => {
   const [searchText, setSearchText] = useState("");
   const [filterPressed, setFilterPressed] = useState(false);
+  const [filtered, setFiltered] = useState<any>();
   const handleFilterPress = (event: GestureResponderEvent) => {
     setFilterPressed(!filterPressed);
   };
@@ -31,11 +32,7 @@ const HomeScreen = () => {
   const feeds = useSelector((state: RootState) => state.feeds.feeds);
   const dispatch = useDispatch<AppDispatch>();
 
-  const {
-    data: products,
-    isLoading,
-    isSuccess,
-  } = useQuery({
+  const { data: products, isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const data = await fetchFeeds();
@@ -43,6 +40,16 @@ const HomeScreen = () => {
       return data;
     },
   });
+  function handleSearchText(text: string): void {
+    setSearchText(text);
+    setFiltered(
+      feeds.filter((item: any) => {
+        const title: string = item.title.toLowerCase();
+        return title.includes(text.toLowerCase());
+      })
+    );
+  }
+
   return (
     <SafeAreaView className="flex-1 justify-start items-center bg-[#ebeaef]">
       <View className="flex flex-row p-4 w-full items-center justify-between">
@@ -62,7 +69,7 @@ const HomeScreen = () => {
           <TextInput
             placeholder="Search"
             value={searchText}
-            onChangeText={(val) => setSearchText(val)}
+            onChangeText={handleSearchText}
             className="flex-1 text-base font-semibold py-1 text-[#555]"
             placeholderTextColor={"#808080"}
           />
@@ -85,12 +92,12 @@ const HomeScreen = () => {
 
       {/* Scrollable View Starts */}
       {isLoading ? (
-        <View className="flex-1 h-96  justify-center items-center">
+        <View className="flex-1 justify-center items-center">
           <ActivityIndicator size={"large"} color={"orange"} />
         </View>
       ) : (
         <View>
-          <Feeds feeds={feeds} />
+          <Feeds feeds={filtered || filtered?.length > 0 ? filtered : feeds} />
         </View>
       )}
       {/* Scrollable View Ends */}

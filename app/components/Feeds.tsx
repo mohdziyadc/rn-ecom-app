@@ -11,16 +11,17 @@ const Feeds = ({ feeds }: FeedsProps) => {
   return (
     <View className="flex">
       {feeds.length > 0 ? (
-        <FlatList
-          data={feeds}
-          renderItem={(feed) => <Product product={feed} />}
-          numColumns={2}
-        />
+        <View className="h-[95%] pb-4">
+          <FlatList
+            data={feeds}
+            renderItem={(item) => <Product product={item.item} />}
+            numColumns={2}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
       ) : (
         <View className="text-center mt-64">
-          <Text className="font-semibold text-base">
-            An error occured. Please refresh
-          </Text>
+          <Text className="font-semibold text-base">No data found.</Text>
         </View>
       )}
     </View>
