@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { RootState } from "../context/store";
 import Product from "./Product";
@@ -8,15 +8,17 @@ type FeedsProps = {
 };
 
 const Feeds = ({ feeds }: FeedsProps) => {
+  const screenHeight = Math.round(Dimensions.get("window").height);
   return (
     <View className="flex">
       {feeds.length > 0 ? (
-        <View className="h-[95%] pb-4">
+        <View>
           <FlatList
             data={feeds}
             renderItem={(item) => <Product product={item.item} />}
             numColumns={2}
             keyExtractor={(item, index) => index.toString()}
+            contentContainerStyle={{ paddingBottom: 0.2 * screenHeight }}
           />
         </View>
       ) : (
