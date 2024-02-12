@@ -30,6 +30,7 @@ const BottomNav = ({ activeScreen }: BottomNavProps) => {
           onPress={() => {
             navigation.navigate("Home");
           }}
+          hitSlop={{ top: 25, bottom: 25, left: 25, right: 25 }}
         >
           <MaterialIcons
             name="dashboard"
@@ -41,6 +42,7 @@ const BottomNav = ({ activeScreen }: BottomNavProps) => {
           onPress={() => {
             navigation.navigate("User");
           }}
+          hitSlop={{ top: 25, bottom: 25, left: 25, right: 25 }}
         >
           <FontAwesome
             name="user"
@@ -52,6 +54,7 @@ const BottomNav = ({ activeScreen }: BottomNavProps) => {
           onPress={() => {
             navigation.navigate("Cart");
           }}
+          hitSlop={{ top: 25, bottom: 25, left: 25, right: 25 }}
         >
           {activeScreen === "Cart" ? (
             <FontAwesome6 name="cart-shopping" size={26} color="#fff" />
@@ -63,6 +66,7 @@ const BottomNav = ({ activeScreen }: BottomNavProps) => {
           onPress={() => {
             navigation.navigate("Settings");
           }}
+          hitSlop={{ top: 25, bottom: 25, left: 25, right: 25 }}
         >
           <FontAwesome6
             name="list-ul"
