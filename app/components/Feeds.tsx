@@ -18,7 +18,7 @@ const Feeds = ({ feeds }: FeedsProps) => {
             renderItem={(item) => <Product product={item.item} />}
             numColumns={2}
             keyExtractor={(item, index) => index.toString()}
-            contentContainerStyle={{ paddingBottom: 0.2 * screenHeight }}
+            contentContainerStyle={{ paddingBottom: 0.25 * screenHeight }}
           />
         </View>
       ) : (

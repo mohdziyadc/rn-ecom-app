@@ -93,7 +93,7 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
         </View>
 
         {/* Categories Section */}
-        <View className="flex justify-evenly mt-2   flex-row items-center w-full">
+        <View className="flex justify-evenly -mt-6   flex-row items-center w-full">
           {product?.categories &&
             product?.categories.length > 0 &&
             product?.categories.map((category: any) => (
@@ -111,7 +111,10 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
             ))}
         </View>
       </SafeAreaView>
-      <View className=" bg-white flex-[0.3] rounded-t-[36px] w-full  py-6 px-8 space-y-4 shadow-2xl">
+      <View
+        className=" bg-white  rounded-t-[36px] w-full  py-6 px-8 space-y-4 shadow-2xl"
+        style={{ height: screenHeight * 0.3 }}
+      >
         <View className="flex-row justify-between items-center">
           <View className="flex justify-center items-start">
             <Text className="font-bold text-2xl">{product.title}</Text>
