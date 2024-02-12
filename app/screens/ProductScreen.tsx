@@ -93,13 +93,13 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
         </View>
 
         {/* Categories Section */}
-        <View className="flex justify-evenly mt-2  flex-row items-center w-full">
+        <View className="flex justify-evenly mt-2   flex-row items-center w-full">
           {product?.categories &&
             product?.categories.length > 0 &&
             product?.categories.map((category: any) => (
               <View
                 key={category._id}
-                className="bg-white flex justify-center items-center space-y-2 p-4 shadow-sm rounded-xl"
+                className="bg-white flex w-20 h-20 justify-center items-center space-y-2  shadow-sm rounded-xl"
               >
                 <Image
                   source={{ uri: category?.mainImage?.asset.url }}
@@ -110,54 +110,52 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
               </View>
             ))}
         </View>
-        <View className="flex-1 bg-white rounded-t-[36px] w-full mt-4 py-6 px-8 space-y-4 shadow-2xl">
-          <View className="flex-row justify-between items-center">
-            <View className="flex justify-center items-start">
-              <Text className="font-bold text-2xl">{product.title}</Text>
-              <Text className="text-md text-[#777]">
-                {product?.shortDescription}
-              </Text>
-            </View>
-
-            <TouchableOpacity onPress={handleFavoritePress}>
-              {isFavorite ? (
-                <MaterialCommunityIcons
-                  name="heart-circle"
-                  size={32}
-                  color="black"
-                />
-              ) : (
-                <MaterialCommunityIcons
-                  name="heart-circle-outline"
-                  size={32}
-                  color="black"
-                />
-              )}
-            </TouchableOpacity>
+      </SafeAreaView>
+      <View className=" bg-white flex-[0.3] rounded-t-[36px] w-full  py-6 px-8 space-y-4 shadow-2xl">
+        <View className="flex-row justify-between items-center">
+          <View className="flex justify-center items-start">
+            <Text className="font-bold text-2xl">{product.title}</Text>
+            <Text className="text-md text-[#777]">
+              {product?.shortDescription}
+            </Text>
           </View>
-          <View className="flex-row w-full justify-between items-center">
-            <View>
-              <Text className="text-2xl font-bold">${product.price}</Text>
-            </View>
-            <View className="flex-row  items-center">
-              <View className="flex-row border border-gray-200 mr-2 px-4 py-1 space-x-2 rounded-xl items-center ">
-                <TouchableOpacity onPress={() => handleQuantity(-1)}>
-                  <Text className="text-lg font-bold text-[#555]">-</Text>
-                </TouchableOpacity>
-                <Text className="text-xl font-bold text-black">{quantity}</Text>
-                <TouchableOpacity onPress={() => handleQuantity(1)}>
-                  <Text className="text-lg font-bold text-[#555]">+</Text>
-                </TouchableOpacity>
-              </View>
-              <TouchableOpacity className="bg-black px-4 py-2 rounded-xl">
-                <Text className="text-white font-bold text-base">
-                  Add to cart
-                </Text>
+
+          <TouchableOpacity onPress={handleFavoritePress}>
+            {isFavorite ? (
+              <MaterialCommunityIcons
+                name="heart-circle"
+                size={36}
+                color="black"
+              />
+            ) : (
+              <MaterialCommunityIcons
+                name="heart-circle-outline"
+                size={36}
+                color="black"
+              />
+            )}
+          </TouchableOpacity>
+        </View>
+        <View className="flex-row w-full justify-between items-center">
+          <View>
+            <Text className="text-2xl font-bold">${product.price}</Text>
+          </View>
+          <View className="flex-row  items-center space-x-2 ">
+            <View className="flex-row border border-gray-300 mr-2 px-4 py-1 space-x-3 rounded-xl items-center ">
+              <TouchableOpacity onPress={() => handleQuantity(-1)}>
+                <Text className="text-lg font-bold text-[#555]">-</Text>
+              </TouchableOpacity>
+              <Text className="text-xl font-bold text-black">{quantity}</Text>
+              <TouchableOpacity onPress={() => handleQuantity(1)}>
+                <Text className="text-lg font-bold text-[#555]">+</Text>
               </TouchableOpacity>
             </View>
+            <TouchableOpacity className="bg-black px-4 py-2 rounded-xl">
+              <Text className="text-white text-lg font-bold ">Add to cart</Text>
+            </TouchableOpacity>
           </View>
         </View>
-      </SafeAreaView>
+      </View>
     </>
   );
 };
