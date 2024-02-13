@@ -17,10 +17,12 @@ import { AppDispatch, RootState } from "../context/store";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   AntDesign,
+  FontAwesome6,
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
 import { addToCart } from "../context/cart/cartSlice";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type ProductScreenRouteProp = RouteProp<StackParamList, "Product">;
 type ProductScreenProps = {
@@ -32,7 +34,7 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
   const feeds = useSelector((state: RootState) => state.feeds.feeds);
   const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch<AppDispatch>();
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
   const [isFavorite, setIsFavorite] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -60,7 +62,7 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
 
   const handleCartBtnPress = () => {
     dispatch(addToCart({ product: product, qty: quantity }));
-    console.log("CART ITEMS: " + JSON.stringify(cart.items));
+    // console.log("CART ITEMS: " + JSON.stringify(cart.items));
   };
 
   return isFetching ? (
@@ -74,8 +76,8 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
           <TouchableOpacity onPress={goBack}>
             <MaterialIcons name="chevron-left" size={40} color={"#555"} />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <AntDesign name="shoppingcart" size={32} color="black" />
+          <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
+            <FontAwesome6 name="cart-shopping" size={26} color="#555" />
           </TouchableOpacity>
         </View>
         {/* Image Section */}
