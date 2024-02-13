@@ -1,4 +1,5 @@
 import {
+  Platform,
   StyleSheet,
   Text,
   Touchable,
@@ -25,7 +26,10 @@ const BottomNav = ({ activeScreen }: BottomNavProps) => {
 
   return (
     <SafeAreaView className="absolute bottom-0 right-0 left-0  w-full ">
-      <View className="bg-[#130d2d] p-4 pb-6 w-full flex-row justify-around items-center">
+      <View
+        className="bg-[#130d2d]  w-full flex-row justify-around items-center"
+        style={{ padding: Platform.OS === "ios" ? 10 : 8 }}
+      >
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Home");
