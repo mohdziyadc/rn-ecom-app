@@ -12,14 +12,15 @@ import React, { useState } from "react";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { StackParamList } from "../App";
 import { useQuery } from "@tanstack/react-query";
-import { useSelector } from "react-redux";
-import { RootState } from "../context/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../context/store";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   AntDesign,
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import { addToCart } from "../context/cart/cartSlice";
 
 type ProductScreenRouteProp = RouteProp<StackParamList, "Product">;
 type ProductScreenProps = {
@@ -29,6 +30,8 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
   const screenHeight = Math.round(Dimensions.get("window").height);
   const { id } = route.params;
   const feeds = useSelector((state: RootState) => state.feeds.feeds);
+  const cart = useSelector((state: RootState) => state.cart);
+  const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation();
   const [isFavorite, setIsFavorite] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -53,6 +56,11 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
   const handleQuantity = (action: number) => {
     const newQty = quantity + action;
     setQuantity(newQty < 1 ? 1 : newQty);
+  };
+
+  const handleCartBtnPress = () => {
+    dispatch(addToCart({ product: product, qty: quantity }));
+    console.log("CART ITEMS: " + JSON.stringify(cart.items));
   };
 
   return isFetching ? (
@@ -153,9 +161,26 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
                 <Text className="text-lg font-bold text-[#555]">+</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity className="bg-black px-4 py-2 rounded-xl">
-              <Text className="text-white text-lg font-bold ">Add to cart</Text>
-            </TouchableOpacity>
+            {cart.items.filter((item) => item.product._id === product._id)
+              .length !== 0 ? (
+              <TouchableOpacity
+                className="bg-gray-400 px-4 py-2 rounded-xl"
+                disabled
+              >
+                <Text className="text-white text-lg font-bold ">
+                  Added to cart
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={handleCartBtnPress}
+                className="bg-black px-4 py-2 rounded-xl"
+              >
+                <Text className="text-white text-lg font-bold ">
+                  Add to cart
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>
