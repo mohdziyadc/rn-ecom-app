@@ -1,4 +1,13 @@
-import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -30,16 +39,30 @@ const CartScreen = () => {
           <Text className="text-xl font-bold"> Add products!!</Text>
         </View>
       ) : (
-        <View style={{ height: screenHeight / 2 }} className="w-full">
-          <FlatList
-            data={cart.items}
-            renderItem={({ item }) => (
-              <CartItem product={item.product} quantity={item.qty} />
-            )}
-            keyExtractor={(item) => item.product._id}
-            contentContainerStyle={{ padding: 16 }}
-          />
-        </View>
+        <>
+          <View style={{ height: screenHeight / 2 }} className="w-full">
+            <FlatList
+              data={cart.items}
+              renderItem={({ item }) => (
+                <CartItem product={item.product} quantity={item.qty} />
+              )}
+              keyExtractor={(item) => item.product._id}
+              contentContainerStyle={{ padding: 16 }}
+            />
+          </View>
+
+          <View className="w-full mt-2 p-4">
+            <KeyboardAvoidingView className="bg-white px-4 rounded-3xl flex-row justify-center py-2 w-full">
+              <TextInput
+                className="flex-1 rounded-2xl py-1 px-4"
+                placeholder="Enter Promo code"
+              />
+              <TouchableOpacity className="bg-black px-4 py-2 rounded-3xl">
+                <Text className="text-white font-bold">Apply</Text>
+              </TouchableOpacity>
+            </KeyboardAvoidingView>
+          </View>
+        </>
       )}
     </SafeAreaView>
   );

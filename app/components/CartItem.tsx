@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 
 type CartItemProps = {
@@ -30,8 +30,8 @@ const CartItem = ({ product, quantity }: CartItemProps) => {
         </Text>
         <View className="flex-row mt-2 justify-between items-center">
           <Text className="font-bold text-lg">${product.price}</Text>
-          <View className="flex-row justify-center items-center">
-            <Text className="text-xs text-[#555]">QTY: </Text>
+          <View className="flex-row justify-center  items-center">
+            <Text className="text-[#555]">Qty: </Text>
             <Text className="font-bold text-base">{quantity}</Text>
           </View>
         </View>
