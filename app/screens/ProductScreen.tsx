@@ -38,11 +38,15 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
-  const { data: product, isFetching } = useQuery({
+  const {
+    data: product,
+    isFetching,
+    isLoading,
+  } = useQuery({
     queryKey: ["product"],
     queryFn: async () => {
       const [data] = feeds.filter((item: any) => item._id === id);
-
+      await new Promise((res, rej) => setTimeout(res, 100));
       return data;
     },
   });
@@ -65,7 +69,7 @@ const ProductScreen = ({ route }: ProductScreenProps) => {
     // console.log("CART ITEMS: " + JSON.stringify(cart.items));
   };
 
-  return isFetching ? (
+  return isFetching || isLoading ? (
     <View className="flex-1 justify-center items-center">
       <ActivityIndicator size={"large"} color={"orange"} />
     </View>
